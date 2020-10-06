@@ -24,6 +24,8 @@ private:
 	int pop_size;
 	int in_size;
 	int out_size;
+	int gen;
+	int *innov_num;
 
 
 	

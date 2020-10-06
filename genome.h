@@ -4,8 +4,9 @@
 
 #include<iostream>
 #include<string>
-#include <vector>
-
+#include<vector>
+#include"connection.h"
+#include"node.h"
 
 using namespace std;
 
@@ -17,10 +18,10 @@ public:
 	Genome();
 	~Genome();
 
-private:
+//private:
 
-	vector<Nodes*> nodes;
-	vector<Connection*> connections;
+	//vector<Nodes*> nodes;
+	//vector<Connection*> connections;
 	
 	
 };

@@ -4,8 +4,8 @@
 
 #include<iostream>
 #include<string>
-#include <vector>
-
+#include<vector>
+#include"genome.h"
 
 using namespace std;
 
@@ -14,13 +14,14 @@ class Individual{
 
 public:	
 
-	Individual();
+	Individual(int isize, int osize);
 	~Individual();
 
 private:
 
-	Genome genome;
-	
+	Genome *genome;
+	int in_size;
+	int out_size;
 };
 
 

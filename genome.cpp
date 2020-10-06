@@ -2,3 +2,13 @@
 
 
 using namespace std;
+
+Genome::Genome(){
+
+
+}
+
+Genome::~Genome(){
+
+	
+}
