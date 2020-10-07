@@ -16,12 +16,18 @@ class Genome{
 public:	
 
 	Genome();
+
+	Genome(int *isize, int *osize);
+
 	~Genome();
 
-//private:
+private:
 
-	//vector<Nodes*> nodes;
-	//vector<Connection*> connections;
+	int *in_size;
+	int *out_size;
+
+	vector<Node*> nodes;
+	vector<Connection*> connections;
 	
 	
 };

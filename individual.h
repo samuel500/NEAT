@@ -14,14 +14,14 @@ class Individual{
 
 public:	
 
-	Individual(int isize, int osize);
+	Individual(int *isize, int *osize);
 	~Individual();
 
 private:
 
 	Genome *genome;
-	int in_size;
-	int out_size;
+	int *in_size;
+	int *out_size;
 };
 
 
