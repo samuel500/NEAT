@@ -45,6 +45,7 @@ Individual::Individual(const Individual& indiv){
 }
 
 
+//meta mutation method
 void Individual::mutate(){
 
 

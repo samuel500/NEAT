@@ -12,7 +12,8 @@ Population::Population(int psize, int isize, int osize){
 	in_size = isize;
 	out_size = osize;
 
-	gen = 0;
+	gen = new int;
+	*gen = 0;
 
 	innov_num = new int;
 	*innov_num = 0;
@@ -25,10 +26,12 @@ Population::Population(int psize, int isize, int osize){
 
 	Individual *new_individual;
 
+
+
 	cout<<1<<endl;
 	for(int i=0; i<pop_size; i++){
 
-		new_individual = new Individual(&in_size, &out_size, innov_num);
+		new_individual = new Individual(&in_size, &out_size, innov_num, all_nodes, all_connections);
 
 		individuals.push_back(new_individual);
 	}

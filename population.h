@@ -4,7 +4,7 @@
 
 #include<iostream>
 #include<string>
-#include <vector>
+#include<vector>
 #include"individual.h"
 
 
@@ -21,10 +21,12 @@ public:
 private:
 
 	vector<Individual*> individuals;
+	vector<Node*> all_nodes;
+	vector<Connection*> all_connections;
 	int pop_size;
 	int in_size;
 	int out_size;
-	int gen;
+	int *gen;
 	int *innov_num;
 
 

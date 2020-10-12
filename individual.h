@@ -22,7 +22,7 @@ class Individual{
 
 public:	
 
-	Individual(int *isize, int *osize, int *innnum);
+	Individual(int *isize, int *osize, int *innnum, vector );
 	Individual(const Individual& indiv);
 	~Individual();
 
