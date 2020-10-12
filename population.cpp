@@ -25,10 +25,15 @@ Population::Population(int psize, int isize, int osize){
 
 	Individual *new_individual;
 
+	cout<<1<<endl;
 	for(int i=0; i<pop_size; i++){
-		new_individual = new Individual(&in_size, &out_size);
+
+		new_individual = new Individual(&in_size, &out_size, innov_num);
+
 		individuals.push_back(new_individual);
 	}
+
+	cout << *innov_num << endl;
 
 }
 

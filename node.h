@@ -4,25 +4,36 @@
 
 #include<iostream>
 #include<string>
-#include <vector>
+#include<vector>
 
+#include"connection.h"
 
 using namespace std;
 
+
+enum nodetype {
+	INPUT,
+	OUTPUT,
+	HIDDEN
+};
+
+class Connection;
 
 class Node{
 
 public:	
 
 	Node();
-	Node(bool isinput, bool isoutput);
+	Node(nodetype ntype);
 	~Node();
 
 
+	nodetype node_type;
 
-private:
-	bool is_input;
-	bool is_output;
+	vector<Connection*> in_connections;
+	vector<Connection*> out_connections;
+
+
 	
 }; 
 

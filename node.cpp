@@ -6,15 +6,12 @@ using namespace std;
 
 Node::Node(){
 
-	is_input = false;
 
 }
 
-Node::Node(bool isinput, bool isoutput){
+Node::Node(nodetype ntype){
 
-	is_input = isinput;
-	is_output = isoutput;
-
+	node_type = ntype;
 
 }
 
