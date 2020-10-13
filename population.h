@@ -26,7 +26,7 @@ private:
 	int pop_size;
 	int in_size;
 	int out_size;
-	int *gen;
+	int generation;
 	int *innov_num;
 
 

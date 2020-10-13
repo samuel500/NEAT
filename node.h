@@ -24,11 +24,13 @@ class Node{
 public:	
 
 	Node();
-	Node(nodetype ntype);
+	Node(nodetype ntype, int histmarking);
 	~Node();
 
 
 	nodetype node_type;
+
+	int hist_marking;
 
 	vector<Connection*> in_connections;
 	vector<Connection*> out_connections;

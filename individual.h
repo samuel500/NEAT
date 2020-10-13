@@ -22,7 +22,7 @@ class Individual{
 
 public:	
 
-	Individual(int *isize, int *osize, int *innnum, vector );
+	Individual(int *isize, int *osize, int *gen, int *innnum, vector<Node*> *allnodes, vector<Connection*> *allconnections);
 	Individual(const Individual& indiv);
 	~Individual();
 
@@ -39,12 +39,17 @@ private:
 	vector<Node*> nodes;
 	vector<Node*> inputs;
 	vector<Node*> outputs;
-	
+	vector<Node*> *all_nodes;
+
+
 	vector<Connection*> connections;
+	vector<Connection*> *all_connections;
+
 
 	int *innov_num;
 	int *in_size;
 	int *out_size;
+	int *generation;
 
 };
 
