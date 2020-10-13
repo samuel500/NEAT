@@ -5,6 +5,7 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<cmath>
 
 #include"connection.h"
 
@@ -29,6 +30,7 @@ public:
 
 
 	bool activate();
+	void reset();
 
 	nodetype node_type;
 

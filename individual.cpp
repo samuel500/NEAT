@@ -71,6 +71,15 @@ Individual::Individual(const Individual& indiv){
 }
 
 
+bool Individual::activate(double *x){
+
+
+
+}
+
+
+
+
 //meta mutation method
 void Individual::mutate(){
 

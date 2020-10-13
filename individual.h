@@ -25,7 +25,7 @@ public:
 	Individual(const Individual& indiv);
 	~Individual();
 
-	bool activate(int *x);
+	bool activate(double *x);
 
 	void mutate();
 	bool mutate_add_connection();
