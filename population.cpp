@@ -26,11 +26,6 @@ Population::Population(int psize, int isize, int osize){
 	Individual *new_individual;
 
 
-
-
-	cout<<1<<endl;
-
-
 	for(int i=0; i<pop_size; i++){
 
 

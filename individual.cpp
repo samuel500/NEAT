@@ -50,7 +50,8 @@ Individual::Individual(int *isize, int *osize, int *gen, int *innnum, vector<Nod
 
 
 	mutate_add_connection();
-	mutate_add_connection();
+
+
 
 
 
@@ -119,20 +120,14 @@ bool Individual::mutate_add_connection(){
 
 	bool found = false;
 
-	cout << "s " << all_connections->size() << endl;
 
 	for(conPtr=all_connections->begin(); conPtr != all_connections->end(); ++conPtr){
 		// give identical mutations same hist_marking
 		// could also check for mutation hist gen? 
 		// (https://www.cs.ucf.edu/~kstanley/neat.html#FAQ1  - see "record of innovation" Q
-		cout << "d " << (*conPtr)->in_node->hist_marking << endl;
-		cout << "dd" << in_node->hist_marking << endl;
-		cout << "ddd" << out_node->hist_marking << endl;
-
 		if((*conPtr)->in_node->hist_marking==in_node->hist_marking && (*conPtr)->out_node->hist_marking==out_node->hist_marking){
 			new_innov_number = (*conPtr)->hist_marking;
 			found = true;
-			cout << "found" << endl;
 			break;
 		}
 
