@@ -28,10 +28,16 @@ public:
 	~Node();
 
 
+	bool activate();
+
 	nodetype node_type;
 
 	int hist_marking;
 	int creation_gen;
+
+	bool activated;
+	double firing;
+
 
 	vector<Connection*> in_connections;
 	vector<Connection*> out_connections;

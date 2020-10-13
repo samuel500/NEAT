@@ -11,7 +11,6 @@
 #include"node.h"
 #include"connection.h"
 #include"utils.h"
-#include"net.h"
 
 
 using namespace std;
@@ -26,6 +25,8 @@ public:
 	Individual(const Individual& indiv);
 	~Individual();
 
+	bool activate(int *x);
+
 	void mutate();
 	bool mutate_add_connection();
 	bool mutate_add_node();
@@ -35,7 +36,6 @@ public:
 
 private:
 
-	Net *net;
 	vector<Node*> nodes;
 	vector<Node*> inputs;
 	vector<Node*> outputs;
