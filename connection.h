@@ -19,7 +19,7 @@ class Connection{
 public:	
 
 	Connection();
-	Connection(Node *inode, Node *onode, int hist_marking);
+	Connection(Node *inode, Node *onode, int hist_marking, int creation_gen);
 	~Connection();
 
 	Node *in_node;
@@ -30,6 +30,7 @@ public:
 	bool is_active;
 
 	int hist_marking;
+	int creation_gen;
 
 private:
 

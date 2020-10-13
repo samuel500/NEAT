@@ -28,7 +28,7 @@ public:
 
 	void mutate();
 	bool mutate_add_connection();
-	void mutate_add_node();
+	bool mutate_add_node();
 	void mutate_nudge_weight();
 	void mutate_reset_weight();
 

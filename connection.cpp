@@ -9,7 +9,7 @@ Connection::Connection(){
 
 }
 
-Connection::Connection(Node *inode, Node *onode, int hist_marking):hist_marking(hist_marking){
+Connection::Connection(Node *inode, Node *onode, int hist_marking, int creation_gen): hist_marking(hist_marking), creation_gen(creation_gen){
 
 	in_node = new Node;
 	in_node = inode;
