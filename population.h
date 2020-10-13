@@ -15,7 +15,7 @@ class Population{
 
 public:	
 
-	Population(int psize, int isize, int osize);
+	Population(int pop_size, int in_size, int out_size);
 	~Population();
 
 private:

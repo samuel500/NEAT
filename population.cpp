@@ -5,12 +5,8 @@
 using namespace std;
 
 
-Population::Population(int psize, int isize, int osize){
+Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_size), in_size(in_size), out_size(out_size){
 
-
-	pop_size = psize;
-	in_size = isize;
-	out_size = osize;
 
 	generation = 0;
 

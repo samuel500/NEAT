@@ -85,6 +85,7 @@ bool Individual::mutate_add_connection(){
 
 	vector<Connection*>::iterator conPtr;
 
+
 	do{
 
 		int in_node_id = randint(0, nodes.size()-(*out_size)-1);
@@ -106,7 +107,7 @@ bool Individual::mutate_add_connection(){
 
 		for(conPtr=out_node->in_connections.begin(); conPtr != out_node->in_connections.end(); ++conPtr){
 
-			if((*conPtr)->in_node==in_node) duplicate = true;
+			if((*conPtr)->in_node==in_node) duplicate = true; // proposed connection already exists
 
 		}
 

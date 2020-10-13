@@ -39,10 +39,11 @@ private:
 	vector<Node*> nodes;
 	vector<Node*> inputs;
 	vector<Node*> outputs;
-	vector<Node*> *all_nodes;
-
 
 	vector<Connection*> connections;
+	
+
+	vector<Node*> *all_nodes;
 	vector<Connection*> *all_connections;
 
 

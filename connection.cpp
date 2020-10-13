@@ -9,7 +9,7 @@ Connection::Connection(){
 
 }
 
-Connection::Connection(Node *inode, Node *onode, int histmarking){
+Connection::Connection(Node *inode, Node *onode, int hist_marking):hist_marking(hist_marking){
 
 	in_node = new Node;
 	in_node = inode;
@@ -22,7 +22,7 @@ Connection::Connection(Node *inode, Node *onode, int histmarking){
 	in_node->out_connections.push_back(this);
 	out_node->in_connections.push_back(this);
 
-	hist_marking = histmarking;
+	// hist_marking = histmarking;
 
 	weight = randdouble(-2., 2.);
 

@@ -19,7 +19,7 @@ class Connection{
 public:	
 
 	Connection();
-	Connection(Node *inode, Node *onode, int histmarking);
+	Connection(Node *inode, Node *onode, int hist_marking);
 	~Connection();
 
 	Node *in_node;

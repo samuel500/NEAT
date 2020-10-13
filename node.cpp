@@ -9,10 +9,9 @@ Node::Node(){
 
 }
 
-Node::Node(nodetype ntype, int histmarking){
+Node::Node(nodetype ntype, int hist_marking):hist_marking(hist_marking){
 
 	node_type = ntype;
-	hist_marking = histmarking;
 
 }
 
