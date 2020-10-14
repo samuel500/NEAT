@@ -24,7 +24,7 @@ Connection::Connection(Node *inode, Node *onode, int hist_marking, int creation_
 
 	// hist_marking = histmarking;
 
-	weight = randdouble(-2., 2.);
+	weight = randdouble(-1., 1.);
 
 }
 

@@ -21,10 +21,13 @@ using namespace std;
 int main(int argc, char *argv[]){
 	srand(time(0));
 
-	int s = randint(0, 5);
-	cout << s << endl;
-	s = randint(0,5);
-	cout << s << endl;
+
+	cout << rand()/(double) RAND_MAX;
+
+	// int s = randint(0, 5);
+	// cout << s << endl;
+	// s = randint(0,5);
+	// cout << s << endl;
 
 	// int *in_size = new int(2);
 	// int *out_size = new int(1);

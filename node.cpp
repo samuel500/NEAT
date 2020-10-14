@@ -5,8 +5,8 @@ using namespace std;
 
 
 double sigmoid(double x){
-
-	return (1/(1+(exp(-(x*4.9))))); // this, or larger weight?
+	double mult = 4.9;
+	return (1/(1+(exp(-(x*mult))))); // this, or larger weight?
 
 
 }
@@ -24,29 +24,46 @@ Node::Node(nodetype ntype, int hist_marking, int creation_gen): hist_marking(his
 
 }
 
+
 bool Node::activate(){
 
+	firing = 0.;
 
 	vector<Connection*>::iterator conPtr;
 
 	bool any_active_input_con = false;
+	bool any_active_input_node = false;
 	for(conPtr=in_connections.begin(); conPtr != in_connections.end(); ++conPtr){
 
 		if((*conPtr)->is_active){
 			any_active_input_con = true;
-			if(!((*conPtr)->in_node->activated)) return false;
+			if(((*conPtr)->in_node->activated)){
+				any_active_input_node = true;
+			// 	return false;
+			}
 		}
 	}
-	if(!any_active_input_con) return false; 
+	if(!any_active_input_con){
+		cout << "node not activated2" <<endl;
+		return false; 
+	}
 
 	for(conPtr=in_connections.begin(); conPtr != in_connections.end(); ++conPtr){
 
 		firing += (*conPtr)->in_node->firing * (*conPtr)->weight;
-		firing = sigmoid(firing);
 	}
+	
+	if(any_active_input_node){
+		firing = sigmoid(firing);
+		activated = true;
+
+	}
+
 
 	return true;
 }
+
+
 
 void Node::reset(){
 

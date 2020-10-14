@@ -1,5 +1,3 @@
-
-
 #include"individual.h"
 
 
@@ -20,7 +18,6 @@ Individual::Individual(int *isize, int *osize, int *gen, int *innnum, vector<Nod
 	innov_num = innnum;
 
 
-
 	all_nodes = allnodes;
 	all_connections = allconnections;
 
@@ -34,8 +31,6 @@ Individual::Individual(int *isize, int *osize, int *gen, int *innnum, vector<Nod
 		
 		inputs.push_back(new_node);
 		nodes.push_back(new_node);
-
-
 	}
 
 	for(int i=0; i<*out_size; i++){
@@ -48,16 +43,11 @@ Individual::Individual(int *isize, int *osize, int *gen, int *innnum, vector<Nod
 	}
 
 
-
 	mutate_add_connection();
-	mutate_add_connection();
-
-	mutate_add_node();
 	mutate_add_node();
 
 	mutate_add_connection();
-
-
+	mutate_add_node();
 
 
 }
@@ -71,13 +61,70 @@ Individual::Individual(const Individual& indiv){
 }
 
 
-bool Individual::activate(double *x){
+bool Individual::activate(vector<double> input){
 
+	if(input.size() != inputs.size()){
+		cout << "invalid input size" << endl;
+		return false;
+	}
+
+	for(int i=0; i<inputs.size(); i++){
+		inputs[i]->firing = input[i];
+		inputs[i]->activated = true;
+	}
+
+	// messy, but it looks like it's the way to go 
+	// (see FAQ: https://www.cs.ucf.edu/~kstanley/neat.html#FAQ1)
+	int max_loops = 20; 
+	int loops = 0;
+	bool outputs_activated = false;
+	while(!outputs_activated || loops<max_loops){
+		outputs_activated = true;
+		for(int i=*in_size; i<nodes.size(); i++){
+			nodes[i]->activate();
+			
+			if(nodes[i]->node_type==OUTPUT && !nodes[i]->activated){
+				outputs_activated = false;
+			}
+		}
+		loops++;
+
+	}
+
+	if(!outputs_activated) {
+		cout<<"activation pb" << endl;
+		return false;
+	}
+	else return true;
+
+}
+
+vector<double> Individual::get_outputs(){
+	
+	vector<double> out;
+
+	vector<Node*>::iterator nodePtr;
+	for(nodePtr=outputs.begin(); nodePtr != outputs.end(); ++nodePtr){
+
+		out.push_back((*nodePtr)->firing);
+
+	}
+	return out;
 
 
 }
 
 
+void Individual::reset(){
+
+	vector<Node*>::iterator nodePtr;
+	for(nodePtr=nodes.begin(); nodePtr != nodes.end(); ++nodePtr){
+
+		(*nodePtr)->reset();
+
+	}
+
+}
 
 
 //meta mutation method
@@ -124,9 +171,13 @@ bool Individual::mutate_add_connection(){
 			if((*conPtr)->in_node==in_node) duplicate = true; // proposed connection already exists
 
 		}
+		for(conPtr=out_node->out_connections.begin(); conPtr != out_node->out_connections.end(); ++conPtr){
 
+			if((*conPtr)->out_node==in_node) duplicate = true; // proposed opposite connection already exists, prevents simple loops
 
-	}while(i<15 && duplicate==true);
+		}
+
+	}while(i<20 && duplicate==true);
 
 	if(duplicate==true) return false; // couldn't find any new possible connection
 
@@ -168,18 +219,15 @@ bool Individual::mutate_add_connection(){
 
 void Individual::mutate_nudge_weight(){
 
-
 }
 
 
 void Individual::mutate_reset_weight(){
 
-
 }
 
 
 bool Individual::mutate_add_node(){
-
 
 	bool found_active = false;
 	int rand_connection_id;
@@ -190,7 +238,12 @@ bool Individual::mutate_add_node(){
 			break;
 		}
 	}
-	if(!found_active) return false;
+	if(!found_active){ 
+		cout << "no active connection found"<< endl;
+		return false;
+
+
+	}
 
 	Connection *chosen_con = connections[rand_connection_id];
 	Node *init_node = chosen_con->in_node;
@@ -238,9 +291,6 @@ bool Individual::mutate_add_node(){
 	
 	new_in_connection->weight = 1.0;
 	new_out_connection->weight = chosen_con->weight;
-	
-	// new_node->in_connections.push_back(new_in_connection);
-	// new_node->out_connections.push_back(new_out_connection);
 
 
 	connections.push_back(new_in_connection);
@@ -249,16 +299,14 @@ bool Individual::mutate_add_node(){
 	all_connections->push_back(new_in_connection);
 	all_connections->push_back(new_out_connection);
 
-	nodes.push_back(new_node);
+	nodes.insert(nodes.begin()+(nodes.size()-(*out_size)), new_node); // add before the output nodes
 	all_nodes->push_back(new_node);
-
 
 	return true;
 }
 
 
 Individual::~Individual(){
-
 
 	vector<Node*>::iterator curNode;
 	vector<Connection*>::iterator curCon;

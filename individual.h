@@ -25,14 +25,15 @@ public:
 	Individual(const Individual& indiv);
 	~Individual();
 
-	bool activate(double *x);
+	bool activate(vector<double> input);
 
 	void mutate();
 	bool mutate_add_connection();
 	bool mutate_add_node();
 	void mutate_nudge_weight();
 	void mutate_reset_weight();
-
+	vector<double> get_outputs();
+	void reset();
 
 private:
 
