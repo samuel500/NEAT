@@ -37,7 +37,7 @@ Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_si
 
 		vector<double> out = new_individual->get_outputs();
 		cout<<out[0]<<endl;
-		
+
 		individuals.push_back(new_individual);
 
 	}
@@ -47,6 +47,40 @@ Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_si
 	endl;
 
 }
+
+
+void Population::xor_epoch(){
+
+	vector<vector<double>> xs {{0.,0.}, {0.,1.}, {1.,0.}, {1.,1.}};
+	vector<double> ys {1., 0., 0., 1.};
+
+	vector<Individual*>::iterator indPtr;
+
+
+	for(indPtr=individuals.begin(); indPtr!=individuals.end(); indPtr++){
+		double fitness=4.;
+		for(int i=0; i<xs.size(); i++){
+			(*indPtr)->activate(xs[i]);
+			vector<double> out = (*indPtr)->get_outputs();
+			fitness -= abs(out[0]-ys[i]);
+		}
+		fitness = pow(fitness, 2);
+		(*indPtr)->fitness = fitness;
+	}
+
+
+
+
+
+}
+
+
+void Population::speciate(){
+
+
+
+}
+
 
 Population::~Population(){
 	vector<Individual*>::iterator curInd;

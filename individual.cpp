@@ -18,6 +18,8 @@ Individual::Individual(int *isize, int *osize, int *gen, int *innnum, vector<Nod
 	innov_num = innnum;
 
 
+	fitness = 0.;
+
 	all_nodes = allnodes;
 	all_connections = allconnections;
 
@@ -48,6 +50,7 @@ Individual::Individual(int *isize, int *osize, int *gen, int *innnum, vector<Nod
 
 	mutate_add_connection();
 	mutate_add_node();
+
 
 
 }

@@ -53,6 +53,8 @@ private:
 	int *out_size;
 	int *generation;
 
+	double fitness;
+
 };
 
 
