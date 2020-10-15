@@ -44,10 +44,13 @@ Individual::Individual(int *isize, int *osize, int *gen, int *innnum, vector<Nod
 
 	}
 
+	mutate_add_connection();
 
 	mutate_add_connection();
 	mutate_add_node();
 
+	mutate_add_connection();
+	mutate_add_node();
 	mutate_add_connection();
 	mutate_add_node();
 

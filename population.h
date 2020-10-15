@@ -29,6 +29,7 @@ private:
 	vector<Node*> all_nodes;
 	vector<Connection*> all_connections;
 
+	vector<Species*> species;
 
 	int pop_size;
 	int in_size;

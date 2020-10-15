@@ -48,6 +48,9 @@ bool Species::is_compatible(Individual *candidate){
 
 	int marking_cursor = rep_n_cursor; 
 	
+
+	int offset_n = 0; // 
+
 	do{
 
 		if((rep_n_cursor==rep_nodes.size() || cand_n_cursor==cand_nodes.size()) && (rep_c_cursor==rep_cons.size() || cand_c_cursor==cand_cons.size())) break;
@@ -55,7 +58,7 @@ bool Species::is_compatible(Individual *candidate){
 		else if(rep_c_cursor==rep_cons.size() || cand_c_cursor==cand_cons.size()) marking_cursor = min(rep_nodes[rep_n_cursor]->hist_marking, cand_nodes[cand_n_cursor]->hist_marking);
 		else marking_cursor = min(rep_nodes[rep_n_cursor]->hist_marking, min(cand_nodes[cand_n_cursor]->hist_marking, min(rep_cons[rep_c_cursor]->hist_marking, cand_cons[cand_c_cursor]->hist_marking)));
 
-		if(rep_nodes[rep_n_cursor]->hist_marking==marking_cursor || cand_nodes[cand_n_cursor]->hist_marking==marking_cursor){
+		if(rep_nodes[rep_n_cursor - offset_n]->hist_marking==marking_cursor || cand_nodes[cand_n_cursor - offset_n]->hist_marking==marking_cursor){
 			if(rep_nodes[rep_n_cursor]->hist_marking != cand_nodes[cand_n_cursor]->hist_marking){
 				D += 1.;
 				if(rep_nodes[rep_n_cursor]->hist_marking <= cand_nodes[cand_n_cursor]->hist_marking) rep_n_cursor++;
@@ -65,9 +68,14 @@ bool Species::is_compatible(Individual *candidate){
 				rep_n_cursor++;
 				cand_n_cursor++;
 			}
-			if(rep_n_cursor==rep_nodes.size()) E += cand_nodes.size()-(double)cand_n_cursor;
-			else if(cand_n_cursor==cand_nodes.size()) E += rep_nodes.size()-(double)rep_n_cursor;
-
+			if(rep_n_cursor==rep_nodes.size()){
+				E += cand_nodes.size()-(double)cand_n_cursor;
+				offset_n = 1;
+			}
+			else if(cand_n_cursor==cand_nodes.size()){
+				E += rep_nodes.size()-(double)rep_n_cursor;
+				offset_n = 1;
+			}
 		}
 		else{
 			if(rep_cons[rep_c_cursor]->hist_marking != cand_cons[cand_c_cursor]->hist_marking){
@@ -107,7 +115,9 @@ bool Species::add_member(Individual *candidate){
 
 	if (!is_compatible(candidate)) return false;
 
+	members.push_back(candidate);
 
+	return true;
 
 }
 

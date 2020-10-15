@@ -38,10 +38,14 @@ Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_si
 		vector<double> out = new_individual->get_outputs();
 		cout<<out[0]<<endl;
 
+		new_individual->reset();
+
 		individuals.push_back(new_individual);
 
 	}
 
+	speciate();
+	cout << "spe size " << species.size() << endl;
 
 	cout << "fin innov_num " << *innov_num <<
 	endl;
@@ -69,15 +73,39 @@ void Population::xor_epoch(){
 	}
 
 
-
-
-
 }
 
 
 void Population::speciate(){
 
+	vector<Individual*>::iterator curInd;
+	vector<Species*>::iterator spePtr;
 
+	bool accepted;
+	cout << 5<<endl;
+
+	for(curInd=individuals.begin(); curInd!=individuals.end(); ++curInd){
+		accepted = false;
+		if(species.size()==0){
+			Species *new_species = new Species(*curInd);
+
+			species.push_back(new_species);
+		}
+		else{
+			for(spePtr=species.begin(); spePtr!=species.end(); ++spePtr){
+				cout <<6<<endl;
+
+				accepted = (*spePtr)->add_member(*curInd);
+
+				if(accepted) break;
+			}
+			if(!accepted){
+				Species *new_species = new Species(*curInd);
+				species.push_back(new_species);
+			}
+
+		}
+	}
 
 }
 
