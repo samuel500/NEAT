@@ -22,12 +22,15 @@ Connection::Connection(Node *inode, Node *onode, int hist_marking, int creation_
 	in_node->out_connections.push_back(this);
 	out_node->in_connections.push_back(this);
 
-	// hist_marking = histmarking;
-
 	weight = randdouble(-1., 1.);
 
 }
 
+bool Connection::operator<(const Connection& connection){
+
+	return (hist_marking<connection.hist_marking);
+
+}
 
 Connection::~Connection(){
 

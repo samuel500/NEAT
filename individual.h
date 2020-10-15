@@ -35,7 +35,7 @@ public:
 	vector<double> get_outputs();
 	void reset();
 
-private:
+	double fitness;
 
 	vector<Node*> nodes;
 	vector<Node*> inputs;
@@ -53,7 +53,6 @@ private:
 	int *out_size;
 	int *generation;
 
-	double fitness;
 
 };
 

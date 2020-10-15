@@ -73,6 +73,15 @@ void Node::reset(){
 
 
 
+bool Node::operator<(const Node& node){
+
+	return (hist_marking<node.hist_marking);
+
+}
+
+
+
+
 Node::~Node(){
 
 	

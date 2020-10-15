@@ -22,6 +22,9 @@ public:
 	Connection(Node *inode, Node *onode, int hist_marking, int creation_gen);
 	~Connection();
 
+	bool operator<(const Connection& connection);
+
+
 	Node *in_node;
 	Node *out_node;
 

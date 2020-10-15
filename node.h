@@ -28,6 +28,8 @@ public:
 	Node(nodetype ntype, int hist_marking, int creation_gen);
 	~Node();
 
+	bool operator<(const Node& node);
+
 
 	bool activate();
 	void reset();

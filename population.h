@@ -7,6 +7,7 @@
 #include<vector>
 #include<cmath>
 #include"individual.h"
+#include"species.h"
 
 
 using namespace std;
@@ -27,7 +28,7 @@ private:
 	vector<Individual*> individuals;
 	vector<Node*> all_nodes;
 	vector<Connection*> all_connections;
-	vector
+
 
 	int pop_size;
 	int in_size;
