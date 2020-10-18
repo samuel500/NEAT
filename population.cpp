@@ -14,7 +14,6 @@ Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_si
 	*innov_num = in_size+out_size;
 
 
-
 	cout << "pop size " << pop_size << endl;
 
 	cout << "innov_num " << *innov_num << endl;
@@ -60,6 +59,7 @@ void Population::xor_epoch(){
 
 	vector<Individual*>::iterator indPtr;
 
+	double avg_fitness = 0.;
 
 	for(indPtr=individuals.begin(); indPtr!=individuals.end(); indPtr++){
 		double fitness=4.;
@@ -72,6 +72,13 @@ void Population::xor_epoch(){
 		(*indPtr)->fitness = fitness;
 	}
 
+	vector<Species*>::iterator spePtr;
+
+
+	for(spePtr=species.begin(); spePtr!=species.end(); ++spePtr){
+		(*spePtr)->adjust_fitness();
+	}
+
 
 }
 
@@ -82,7 +89,6 @@ void Population::speciate(){
 	vector<Species*>::iterator spePtr;
 
 	bool accepted;
-	cout << 5<<endl;
 
 	for(curInd=individuals.begin(); curInd!=individuals.end(); ++curInd){
 		accepted = false;
@@ -93,7 +99,6 @@ void Population::speciate(){
 		}
 		else{
 			for(spePtr=species.begin(); spePtr!=species.end(); ++spePtr){
-				cout <<6<<endl;
 
 				accepted = (*spePtr)->add_member(*curInd);
 

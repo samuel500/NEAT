@@ -36,6 +36,10 @@ public:
 	void reset();
 
 	double fitness;
+	double adjusted_fitness;
+
+	bool operator<(const Individual& individual);
+
 
 	vector<Node*> nodes;
 	vector<Node*> inputs;

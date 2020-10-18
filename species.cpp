@@ -18,7 +18,6 @@ Species::Species(Individual *founding_member, double c1, double c2, double c3, d
 bool Species::is_compatible(Individual *candidate){
 
 
-
 	double delta = 0.;
 
 	double N;
@@ -109,6 +108,34 @@ bool Species::is_compatible(Individual *candidate){
 
 }
 
+void Species::adjust_fitness(){
+
+	vector<Individual*>::iterator indPtr;
+
+	double tot_fitness = 0.;
+
+	for(indPtr=individuals.begin(); indPtr!=individuals.end(); indPtr++){
+
+		(*indPtr)->adjusted_fitness = (*indPtr)->fitness/individuals.size();
+	}
+
+
+}
+
+double Species::get_tot_species_fitness(){
+
+	vector<Individual*>::iterator indPtr;
+
+	double tot_fitness = 0.;
+
+	for(indPtr=individuals.begin(); indPtr!=individuals.end(); indPtr++){
+
+		tot_fitness += (*indPtr)->adjusted_fitness;
+	}
+
+	return tot_fitness;
+
+}
 
 
 bool Species::add_member(Individual *candidate){

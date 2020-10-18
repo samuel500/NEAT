@@ -59,7 +59,6 @@ Individual::Individual(int *isize, int *osize, int *gen, int *innnum, vector<Nod
 }
 
 
-
 //copy constructor
 Individual::Individual(const Individual& indiv){
 
@@ -325,4 +324,10 @@ Individual::~Individual(){
 		delete *curCon;
 	}
 
+}
+
+
+bool Individual::operator<(const Individual& individual){
+
+	return (fitness<individual.fitness);
 }

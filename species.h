@@ -25,6 +25,9 @@ public:
 
 	bool add_member(Individual *candidate);
 
+	double get_tot_species_fitness();
+
+	void adjust_fitness();
 
 	vector<Individual*> members;
 
