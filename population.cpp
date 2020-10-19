@@ -4,9 +4,10 @@
 
 using namespace std;
 
+bool spePtr_compare(Species *a, Species *b){return (*a<*b);};
+
 
 Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_size), in_size(in_size), out_size(out_size){
-
 
 	generation = 0;
 
@@ -59,9 +60,9 @@ void Population::xor_epoch(){
 
 	vector<Individual*>::iterator indPtr;
 
-	double avg_fitness = 0.;
+	double pop_avg_fitness = 0.;
 
-	for(indPtr=individuals.begin(); indPtr!=individuals.end(); indPtr++){
+	for(indPtr=individuals.begin(); indPtr!=individuals.end(); ++indPtr){
 		double fitness=4.;
 		for(int i=0; i<xs.size(); i++){
 			(*indPtr)->activate(xs[i]);
@@ -77,8 +78,31 @@ void Population::xor_epoch(){
 
 	for(spePtr=species.begin(); spePtr!=species.end(); ++spePtr){
 		(*spePtr)->adjust_fitness();
+
 	}
 
+	sort(species.begin(), species.end(), spePtr_compare);
+
+	for(indPtr=individuals.begin(); indPtr!=individuals.end(); ++indPtr){
+		pop_avg_fitness += (*indPtr)->adjusted_fitness;
+	}
+
+	pop_avg_fitness /= individuals.size();
+
+	
+	for(indPtr=individuals.begin(); indPtr!=individuals.end(); ++indPtr){
+		(*indPtr)->est_n_offspring = (*indPtr)->adjusted_fitness / pop_avg_fitness;
+	}
+
+	int temp_n_offspring = 0;
+	for(spePtr=species.begin(); spePtr!=species.end(); ++spePtr){
+		temp_n_offspring += (*spePtr)->calc_n_offspring();
+	}
+
+	// give missing offspring (bc double->int) to best species
+	species[species.size()-1]->n_offspring += (pop_size - temp_n_offspring);
+
+	
 
 }
 

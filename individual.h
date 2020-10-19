@@ -37,6 +37,7 @@ public:
 
 	double fitness;
 	double adjusted_fitness;
+	double est_n_offspring;
 
 	bool operator<(const Individual& individual);
 

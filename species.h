@@ -25,15 +25,25 @@ public:
 
 	bool add_member(Individual *candidate);
 
-	double get_tot_species_fitness();
+	// double get_tot_species_fitness();
 
 	void adjust_fitness();
+
+	double get_avg_fitness() const;
+
+
+	bool operator<(const Species& spe);
+
+	int calc_n_offspring();
+
 
 	vector<Individual*> members;
 
 	Individual *rep;
 
 	double c1, c2, c3, max_d;
+
+	int n_offspring;
 
 	
 };

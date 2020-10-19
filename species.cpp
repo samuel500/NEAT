@@ -105,37 +105,53 @@ bool Species::is_compatible(Individual *candidate){
 	if(delta>max_d)return false;
 	else return true;
 
-
 }
+
 
 void Species::adjust_fitness(){
 
 	vector<Individual*>::iterator indPtr;
 
-	double tot_fitness = 0.;
 
-	for(indPtr=individuals.begin(); indPtr!=individuals.end(); indPtr++){
+	for(indPtr=members.begin(); indPtr!=members.end(); indPtr++){
 
-		(*indPtr)->adjusted_fitness = (*indPtr)->fitness/individuals.size();
+		(*indPtr)->adjusted_fitness = (*indPtr)->fitness/members.size();
 	}
 
 
 }
 
-double Species::get_tot_species_fitness(){
 
-	vector<Individual*>::iterator indPtr;
+double Species::get_avg_fitness() const {
 
-	double tot_fitness = 0.;
+	vector<Individual*>::const_iterator indPtr;
 
-	for(indPtr=individuals.begin(); indPtr!=individuals.end(); indPtr++){
+	double avg_fitness = 0.;
 
-		tot_fitness += (*indPtr)->adjusted_fitness;
+	for(indPtr=members.begin(); indPtr!=members.end(); indPtr++){
+
+		avg_fitness += (*indPtr)->adjusted_fitness;
 	}
 
-	return tot_fitness;
-
+	return avg_fitness;
 }
+
+
+// double Species::get_tot_species_fitness(){
+
+// 	vector<Individual*>::iterator indPtr;
+
+// 	double tot_fitness = 0.;
+
+// 	for(indPtr=members.begin(); indPtr!=members.end(); indPtr++){
+
+// 		tot_fitness += (*indPtr)->adjusted_fitness;
+// 	}
+
+// 	return tot_fitness;
+
+// }
+
 
 
 bool Species::add_member(Individual *candidate){
@@ -148,6 +164,29 @@ bool Species::add_member(Individual *candidate){
 
 }
 
+
+int Species::calc_n_offspring(){
+	vector<Individual*>::iterator indPtr;
+
+	n_offspring = 0;
+
+	double double_offspring = 0.;
+
+	for(indPtr=members.begin(); indPtr!=members.end(); indPtr++){
+
+		double_offspring += (*indPtr)->est_n_offspring;
+	}
+
+	n_offspring = (int) floor(double_offspring);
+
+	return n_offspring;
+}
+
+
+bool Species::operator<(const Species& spe){
+
+	return (get_avg_fitness()<spe.get_avg_fitness());
+}
 
 
 Species::~Species(){
