@@ -6,6 +6,8 @@ using namespace std;
 
 bool nodePtr_compare(Node *a, Node *b){return (*a<*b);};
 bool consPtr_compare(Connection *a, Connection *b){return (*a<*b);};
+bool indPtr_compare(Individual *a, Individual *b){return (*a<*b);};
+
 
 Species::Species(Individual *founding_member, double c1, double c2, double c3, double max_d): c1(c1), c2(c2), c3(c3), max_d(max_d){
 
@@ -181,6 +183,41 @@ int Species::calc_n_offspring(){
 
 	return n_offspring;
 }
+
+
+
+vector<Individual*> Species::evolve(){
+
+	vector<Individual*> new_individuals;
+
+	// percentage of species members whose descendants go on to the next generation
+	// probably should be set somewhere else
+	double p_mating = 0.5; 
+
+	sort(members.begin(), members.end(), indPtr_compare);
+
+
+	while(new_individuals.size() < n_offspring){
+
+		if(n_offspring > 5){
+			new_individuals
+		}
+
+	}
+
+
+
+	return new_individuals;
+
+
+}
+
+
+
+
+
+
+
 
 
 bool Species::operator<(const Species& spe){

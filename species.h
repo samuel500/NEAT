@@ -20,21 +20,19 @@ public:
 	Species(Individual *founding_member, double c1=1., double c2=1., double c3=0.4, double max_d=3.0);
 	~Species();
 
-
 	bool is_compatible(Individual *candidate);
-
 	bool add_member(Individual *candidate);
 
 	// double get_tot_species_fitness();
 
 	void adjust_fitness();
-
 	double get_avg_fitness() const;
+	int calc_n_offspring();
 
+
+	vector<Individual*> evolve();
 
 	bool operator<(const Species& spe);
-
-	int calc_n_offspring();
 
 
 	vector<Individual*> members;

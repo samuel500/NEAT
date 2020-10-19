@@ -102,7 +102,9 @@ void Population::xor_epoch(){
 	// give missing offspring (bc double->int) to best species
 	species[species.size()-1]->n_offspring += (pop_size - temp_n_offspring);
 
-	
+	for(spePtr=species.begin(); spePtr!=species.end(); ++spePtr){
+		(*spePtr)->evolve();
+	}
 
 }
 

@@ -63,6 +63,65 @@ Individual::Individual(int *isize, int *osize, int *gen, int *innnum, vector<Nod
 Individual::Individual(const Individual& indiv){
 
 
+	innov_num = new int;
+	innov_num = indiv.innov_num;
+	
+	in_size = new int;
+	in_size = indiv.in_size;
+	out_size = new int;
+	out_size = indiv.out_size;
+		
+	generation = new int;
+	generation = indiv.generation;
+
+	Node *new_node;
+
+
+	vector<Node*>::const_iterator nodePtr;
+	for(nodePtr=indiv.nodes.begin(); nodePtr != indiv.nodes.end(); ++nodePtr){
+
+		new_node = new Node((*nodePtr)->node_type, (*nodePtr)->hist_marking, *generation);
+		if((*nodePtr)->node_type == OUTPUT){
+			outputs.push_back(new_node);
+		}
+		else if((*nodePtr)->node_type == INPUT){
+			inputs.push_back(new_node);
+		}
+		nodes.push_back(new_node);
+
+	}
+
+	vector<Connection*>::const_iterator conPtr;
+	for(conPtr=indiv.connections.begin(); conPtr != connections.nodes.end(); ++conPtr){
+
+		int in_node_hist_marking = (*conPtr)->in_node->hist_marking;
+		int out_node_hist_marking = (*conPtr)->out_node->hist_marking;
+
+		Node *con_in_node = new Node;
+		Node *con_out_node = new Node;
+
+		bool found_in = false;
+		bool found_out = false;
+
+		for(nodePtr=nodes.begin(); nodePtr != nodes.end(); ++nodePtr){
+
+			if((*nodePtr)->hist_marking == in_node_hist_marking){
+				con_in_node = (*nodePtr);
+				found_in = true;
+			}
+			else if((*nodePtr)->hist_marking == out_node_hist_marking){
+				con_out_node = *nodePtr;
+				found_out = true;
+			}
+			if(found_in && found_out) break;
+
+		}
+
+		Connection *new_connection = new Connection(con_in_node, con_out_node, (*conPtr)->hist_marking, *generation);
+		connections.push_back(new_connection);
+
+	}
+
 }
 
 
@@ -329,5 +388,5 @@ Individual::~Individual(){
 
 bool Individual::operator<(const Individual& individual){
 
-	return (fitness<individual.fitness);
+	return (adjusted_fitness<individual.adjusted_fitness);
 }

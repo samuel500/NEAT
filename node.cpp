@@ -25,6 +25,13 @@ Node::Node(nodetype ntype, int hist_marking, int creation_gen): hist_marking(his
 }
 
 
+Node::Node(const Node& node){
+
+	
+}
+
+
+
 bool Node::activate(){
 
 	firing = 0.;

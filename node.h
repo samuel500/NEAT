@@ -26,6 +26,7 @@ public:
 
 	Node();
 	Node(nodetype ntype, int hist_marking, int creation_gen);
+	Node(const Node& node); 
 	~Node();
 
 	bool operator<(const Node& node);
