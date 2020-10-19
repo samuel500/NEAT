@@ -21,19 +21,18 @@ class Individual{
 
 public:	
 
-	Individual(int *isize, int *osize, int *gen, int *innnum, vector<Node*> *allnodes, vector<Connection*> *allconnections);
+	Individual(int *isize, int *osize, int *gen, int *innnum); //, vector<Node*> *allnodes, vector<Connection*> *allconnections);
 	Individual(const Individual& indiv);
 	~Individual();
 
 	bool activate(vector<double> input);
 
 	void mutate();
-	bool mutate_add_connection();
-	bool mutate_add_node();
-	void mutate_nudge_weight();
-	void mutate_reset_weight();
+	bool mutate_add_connection(vector<Node*> *allnodes, vector<Connection*> *allconnections);
+	bool mutate_add_node(vector<Node*> *allnodes, vector<Connection*> *allconnections);
+	void mutate_weights();
 	vector<double> get_outputs();
-	void reset();
+	void reset_activations();
 
 	double fitness;
 	double adjusted_fitness;
@@ -49,8 +48,8 @@ public:
 	vector<Connection*> connections;
 	
 
-	vector<Node*> *all_nodes;
-	vector<Connection*> *all_connections;
+	// vector<Node*> *all_nodes;
+	// vector<Connection*> *all_connections;
 
 
 	int *innov_num;

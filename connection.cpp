@@ -32,8 +32,20 @@ bool Connection::operator<(const Connection& connection){
 
 }
 
+void Connection::reset_weight(){
+
+	weight = randdouble(-1., 1.);
+
+}
+
+void Connection::perturb_weight(){
+
+	weight += randdouble(-1., 1.);
+}
+
 Connection::~Connection(){
 
-
+	delete in_node;
+	delete out_node;
 	
 }

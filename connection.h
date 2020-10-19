@@ -24,6 +24,8 @@ public:
 
 	bool operator<(const Connection& connection);
 
+	void reset_weight();
+	void perturb_weight();
 
 	Node *in_node;
 	Node *out_node;
@@ -34,6 +36,7 @@ public:
 
 	int hist_marking;
 	int creation_gen;
+
 
 private:
 

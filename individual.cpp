@@ -4,7 +4,7 @@
 using namespace std;
 
 
-Individual::Individual(int *isize, int *osize, int *gen, int *innnum, vector<Node*> *allnodes, vector<Connection*> *allconnections){
+Individual::Individual(int *isize, int *osize, int *gen, int *innnum){ //, vector<Node*> *allnodes, vector<Connection*> *allconnections){
 
 	in_size = new int;
 	in_size = isize;
@@ -20,8 +20,8 @@ Individual::Individual(int *isize, int *osize, int *gen, int *innnum, vector<Nod
 
 	fitness = 0.;
 
-	all_nodes = allnodes;
-	all_connections = allconnections;
+	// all_nodes = allnodes;
+	// all_connections = allconnections;
 
 
 	Node *new_node;
@@ -29,7 +29,7 @@ Individual::Individual(int *isize, int *osize, int *gen, int *innnum, vector<Nod
 	for(int i=0; i<*in_size; i++){
 		new_node = new Node(INPUT, i, *generation);
 		
-		all_nodes->push_back(new_node);
+		// all_nodes->push_back(new_node);
 		
 		inputs.push_back(new_node);
 		nodes.push_back(new_node);
@@ -37,22 +37,22 @@ Individual::Individual(int *isize, int *osize, int *gen, int *innnum, vector<Nod
 
 	for(int i=0; i<*out_size; i++){
 		new_node = new Node(OUTPUT, *in_size+i, *generation);
-		all_nodes->push_back(new_node);
+		// all_nodes->push_back(new_node);
 
 		outputs.push_back(new_node);
 		nodes.push_back(new_node);
 
 	}
 
-	mutate_add_connection();
+	// mutate_add_connection();
 
-	mutate_add_connection();
-	mutate_add_node();
+	// mutate_add_connection();
+	// mutate_add_node();
 
-	mutate_add_connection();
-	mutate_add_node();
-	mutate_add_connection();
-	mutate_add_node();
+	// mutate_add_connection();
+	// mutate_add_node();
+	// mutate_add_connection();
+	// mutate_add_node();
 
 
 
@@ -179,7 +179,7 @@ vector<double> Individual::get_outputs(){
 }
 
 
-void Individual::reset(){
+void Individual::reset_activations(){
 
 	vector<Node*>::iterator nodePtr;
 	for(nodePtr=nodes.begin(); nodePtr != nodes.end(); ++nodePtr){
@@ -199,7 +199,7 @@ void Individual::mutate(){
 }
 
 
-bool Individual::mutate_add_connection(){
+bool Individual::mutate_add_connection(vector<Node*> *allnodes, vector<Connection*> *allconnections){
 
 	Node *in_node;
 	Node *out_node;
@@ -271,7 +271,7 @@ bool Individual::mutate_add_connection(){
 	Connection *new_connection = new Connection(in_node, out_node, new_innov_number, *generation);
 
 	connections.push_back(new_connection);
-	(*all_connections).push_back(new_connection);
+	// (*all_connections).push_back(new_connection);
 
 	in_node->out_connections.push_back(new_connection);
 	out_node->in_connections.push_back(new_connection);
@@ -281,17 +281,24 @@ bool Individual::mutate_add_connection(){
 }
 
 
-void Individual::mutate_nudge_weight(){
+void Individual::mutate_weights(){
+	vector<Connection*>::iterator conPtr;
 
+	for(conPtr=connections.begin(); conPtr != connections.end(); ++conPtr){
+
+		// uniform perturbation
+		if(randdouble(0.,1.)>0.1){
+			(*conPtr)->perturb_weight();
+		}
+		// assign new random value
+		else{
+			(*conPtr)->reset_weight();
+		}
+	}
 }
 
 
-void Individual::mutate_reset_weight(){
-
-}
-
-
-bool Individual::mutate_add_node(){
+bool Individual::mutate_add_node(vector<Node*> *allnodes, vector<Connection*> *allconnections){
 
 	bool found_active = false;
 	int rand_connection_id;
@@ -360,11 +367,11 @@ bool Individual::mutate_add_node(){
 	connections.push_back(new_in_connection);
 	connections.push_back(new_out_connection);
 
-	all_connections->push_back(new_in_connection);
-	all_connections->push_back(new_out_connection);
+	// all_connections->push_back(new_in_connection);
+	// all_connections->push_back(new_out_connection);
 
 	nodes.insert(nodes.begin()+(nodes.size()-(*out_size)), new_node); // add before the output nodes
-	all_nodes->push_back(new_node);
+	// all_nodes->push_back(new_node);
 
 	return true;
 }

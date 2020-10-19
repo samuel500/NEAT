@@ -27,7 +27,24 @@ Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_si
 
 		activated = false;
 
-		new_individual = new Individual(&in_size, &out_size, &generation, innov_num, &all_nodes, &all_connections);
+		new_individual = new Individual(&in_size, &out_size, &generation, innov_num); //, &all_nodes, &all_connections);
+
+
+		new_individual->mutate_add_connection(&all_nodes, &all_connections);
+
+
+		vector<Connection*>::iterator conPtr;
+		vector<Node*>::iterator nodePtr;
+
+		for(conPtr=new_individual->connections.begin(), conPtr!=new_individual->connections.end(), ++conPtr){
+			all_connections.push_back((*conPtr));
+		}
+		for(nodePtr=new_individual->nodes.begin(), nodePtr!=new_individual->nodes.end(), ++nodePtr){
+			all_nodes.push_back((*nodePtr));
+		}
+
+
+		// testing
 
 		vector<double> inp = {1., 0.5}; 
 
@@ -38,13 +55,16 @@ Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_si
 		vector<double> out = new_individual->get_outputs();
 		cout<<out[0]<<endl;
 
-		new_individual->reset();
+		new_individual->reset_activations();
 
 		individuals.push_back(new_individual);
 
 	}
 
 	speciate();
+
+
+
 	cout << "spe size " << species.size() << endl;
 
 	cout << "fin innov_num " << *innov_num <<
