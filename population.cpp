@@ -36,10 +36,10 @@ Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_si
 		vector<Connection*>::iterator conPtr;
 		vector<Node*>::iterator nodePtr;
 
-		for(conPtr=new_individual->connections.begin(), conPtr!=new_individual->connections.end(), ++conPtr){
+		for(conPtr=new_individual->connections.begin(); conPtr!=new_individual->connections.end(); ++conPtr){
 			all_connections.push_back((*conPtr));
 		}
-		for(nodePtr=new_individual->nodes.begin(), nodePtr!=new_individual->nodes.end(), ++nodePtr){
+		for(nodePtr=new_individual->nodes.begin(); nodePtr!=new_individual->nodes.end(); ++nodePtr){
 			all_nodes.push_back((*nodePtr));
 		}
 

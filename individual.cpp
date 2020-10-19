@@ -199,7 +199,7 @@ void Individual::mutate(){
 }
 
 
-bool Individual::mutate_add_connection(vector<Node*> *allnodes, vector<Connection*> *allconnections){
+bool Individual::mutate_add_connection(vector<Node*> *all_nodes, vector<Connection*> *all_connections){
 
 	Node *in_node;
 	Node *out_node;
@@ -298,7 +298,7 @@ void Individual::mutate_weights(){
 }
 
 
-bool Individual::mutate_add_node(vector<Node*> *allnodes, vector<Connection*> *allconnections){
+bool Individual::mutate_add_node(vector<Node*> *all_nodes, vector<Connection*> *all_connections){
 
 	bool found_active = false;
 	int rand_connection_id;
