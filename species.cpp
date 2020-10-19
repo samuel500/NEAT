@@ -186,9 +186,13 @@ int Species::calc_n_offspring(){
 
 
 
-vector<Individual*> Species::evolve(){
+vector<Individual*> Species::evolve(vector<Node*> *all_nodes, vector<Connection*> *all_connections){
 
 	vector<Individual*> new_individuals;
+
+	vector<Node*>::iterator nodePtr;
+	vector<Connection*>::iterator conPtr;
+
 
 	// percentage of species members whose descendants go on to the next generation
 	// probably should be set somewhere else
@@ -197,15 +201,52 @@ vector<Individual*> Species::evolve(){
 	sort(members.begin(), members.end(), indPtr_compare);
 
 
+	Individual *new_individual;
+
+
+
+
 	while(new_individuals.size() < n_offspring){
 
-		if(n_offspring > 5){
+		int n_parent = randint((int)(p_mating*members.size()), members.size()-1);
 
+
+
+		new_individual = new Individual(*members[n_parent]);
+
+		new_individual->mutate(all_nodes, all_connections);
+
+		for(conPtr=new_individual->connections.begin(); conPtr!=new_individual->connections.end(); ++conPtr){
+			all_connections->push_back((*conPtr));
+		}
+		for(nodePtr=new_individual->nodes.begin(); nodePtr!=new_individual->nodes.end(); ++nodePtr){
+			all_nodes->push_back((*nodePtr));
 		}
 
+		new_individuals.push_back(new_individual);
+
+
+		if(n_offspring > 5 && new_individuals.size()<n_offspring){
+			new_individual = new Individual(*members[members.size()-1]);
+			new_individuals.push_back(new_individual);
+
+			for(conPtr=new_individual->connections.begin(); conPtr!=new_individual->connections.end(); ++conPtr){
+				all_connections->push_back((*conPtr));
+			}
+			for(nodePtr=new_individual->nodes.begin(); nodePtr!=new_individual->nodes.end(); ++nodePtr){
+				all_nodes->push_back((*nodePtr));
+			}
+		}
 	}
 
 
+	rep = members[members.size()-1];
+
+	vector<Individual*>::iterator indPtr;
+
+	for(indPtr=members.begin(); indPtr!=prev(members.end()); ++indPtr){
+		delete *indPtr;
+	}
 
 	return new_individuals;
 

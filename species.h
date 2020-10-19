@@ -30,7 +30,7 @@ public:
 	int calc_n_offspring();
 
 
-	vector<Individual*> evolve();
+	vector<Individual*> evolve(vector<Node*> *all_nodes, vector<Connection*> *all_connections);
 
 	bool operator<(const Species& spe);
 

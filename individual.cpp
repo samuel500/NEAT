@@ -192,9 +192,17 @@ void Individual::reset_activations(){
 
 
 //meta mutation method
-void Individual::mutate(){
+void Individual::mutate(vector<Node*> *all_nodes, vector<Connection*> *all_connections){
 
-
+	if(randdouble(0.,1.)<0.9){
+		mutate_weights();
+	}
+	if(randdouble(0.,1.)<0.03){
+		mutate_add_node(all_nodes, all_connections);
+	}
+	if(randdouble(0.,1.)<0.05){
+		mutate_add_connection(all_nodes, all_connections);
+	}
 
 }
 

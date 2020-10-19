@@ -27,7 +27,7 @@ public:
 
 	bool activate(vector<double> input);
 
-	void mutate();
+	void mutate(vector<Node*> *all_nodes, vector<Connection*> *all_connections);
 	bool mutate_add_connection(vector<Node*> *allnodes, vector<Connection*> *allconnections);
 	bool mutate_add_node(vector<Node*> *allnodes, vector<Connection*> *allconnections);
 	void mutate_weights();

@@ -12,6 +12,9 @@ int main(int argc, char *argv[]){
 	int population_size = 8;
 
 	Population population = Population(population_size, 2, 1);
+
+
+
 	return 0;
 
 }

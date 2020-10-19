@@ -63,7 +63,7 @@ Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_si
 
 	speciate();
 
-
+	
 
 	cout << "spe size " << species.size() << endl;
 
@@ -73,7 +73,20 @@ Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_si
 }
 
 
+// void Population::clear_all_individuals(){
+
+// 	for(indPtr=individuals.begin(), indPtr!=individuals.end(), ++indPtr){
+// 		delete indPtr;
+// 	}
+
+// }
+
+
+
 void Population::xor_epoch(){
+
+	all_nodes.clear();
+	all_connections.clear();
 
 	vector<vector<double>> xs {{0.,0.}, {0.,1.}, {1.,0.}, {1.,1.}};
 	vector<double> ys {1., 0., 0., 1.};
@@ -122,9 +135,18 @@ void Population::xor_epoch(){
 	// give missing offspring (bc double->int) to best species
 	species[species.size()-1]->n_offspring += (pop_size - temp_n_offspring);
 
+
+	vector<Individual*> new_individuals;
+	vector<Individual*> descendants;
+
 	for(spePtr=species.begin(); spePtr!=species.end(); ++spePtr){
-		(*spePtr)->evolve();
+		descendants = (*spePtr)->evolve(&all_nodes, &all_connections);
+		new_individuals.insert(end(new_individuals), begin(descendants), end(descendants));
 	}
+
+	individuals.clear();
+	individuals = new_individuals;
+
 
 }
 
