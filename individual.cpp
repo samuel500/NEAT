@@ -92,7 +92,7 @@ Individual::Individual(const Individual& indiv){
 	}
 
 	vector<Connection*>::const_iterator conPtr;
-	for(conPtr=indiv.connections.begin(); conPtr != connections.nodes.end(); ++conPtr){
+	for(conPtr=indiv.connections.begin(); conPtr != indiv.connections.end(); ++conPtr){
 
 		int in_node_hist_marking = (*conPtr)->in_node->hist_marking;
 		int out_node_hist_marking = (*conPtr)->out_node->hist_marking;

@@ -200,7 +200,7 @@ vector<Individual*> Species::evolve(){
 	while(new_individuals.size() < n_offspring){
 
 		if(n_offspring > 5){
-			new_individuals
+
 		}
 
 	}
