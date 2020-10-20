@@ -4,7 +4,10 @@
 
 using namespace std;
 
+
 bool spePtr_compare(Species *a, Species *b){return (*a<*b);};
+bool indPtr_compare2(Individual *a, Individual *b){return (*a<*b);};
+
 
 
 Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_size), in_size(in_size), out_size(out_size){
@@ -31,6 +34,7 @@ Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_si
 
 
 		new_individual->mutate_add_connection(&all_nodes, &all_connections);
+		new_individual->mutate_add_node(&all_nodes, &all_connections);
 
 
 		vector<Connection*>::iterator conPtr;
@@ -39,6 +43,7 @@ Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_si
 		for(conPtr=new_individual->connections.begin(); conPtr!=new_individual->connections.end(); ++conPtr){
 			all_connections.push_back((*conPtr));
 		}
+
 		for(nodePtr=new_individual->nodes.begin(); nodePtr!=new_individual->nodes.end(); ++nodePtr){
 			all_nodes.push_back((*nodePtr));
 		}
@@ -61,14 +66,8 @@ Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_si
 
 	}
 
-	speciate();
 
-	
 
-	cout << "spe size " << species.size() << endl;
-
-	cout << "fin innov_num " << *innov_num <<
-	endl;
 
 }
 
@@ -82,7 +81,6 @@ Population::Population(int pop_size, int in_size, int out_size): pop_size(pop_si
 // }
 
 
-
 void Population::xor_epoch(){
 
 	all_nodes.clear();
@@ -92,6 +90,7 @@ void Population::xor_epoch(){
 	vector<double> ys {1., 0., 0., 1.};
 
 	vector<Individual*>::iterator indPtr;
+
 
 	double pop_avg_fitness = 0.;
 
@@ -108,6 +107,10 @@ void Population::xor_epoch(){
 
 	vector<Species*>::iterator spePtr;
 
+	sort(individuals.begin(), individuals.end(), indPtr_compare2);
+
+	elite = individuals[individuals.size()-1];
+
 
 	for(spePtr=species.begin(); spePtr!=species.end(); ++spePtr){
 		(*spePtr)->adjust_fitness();
@@ -116,13 +119,15 @@ void Population::xor_epoch(){
 
 	sort(species.begin(), species.end(), spePtr_compare);
 
+
+
 	for(indPtr=individuals.begin(); indPtr!=individuals.end(); ++indPtr){
 		pop_avg_fitness += (*indPtr)->adjusted_fitness;
 	}
 
 	pop_avg_fitness /= individuals.size();
 
-	
+
 	for(indPtr=individuals.begin(); indPtr!=individuals.end(); ++indPtr){
 		(*indPtr)->est_n_offspring = (*indPtr)->adjusted_fitness / pop_avg_fitness;
 	}
@@ -136,14 +141,24 @@ void Population::xor_epoch(){
 	species[species.size()-1]->n_offspring += (pop_size - temp_n_offspring);
 
 
+	for(spePtr=species.begin(); spePtr!=species.end(); ++spePtr){
+		if((*spePtr)->n_offspring==0) species.erase(spePtr);
+	}
+
+
 	vector<Individual*> new_individuals;
 	vector<Individual*> descendants;
 
 	for(spePtr=species.begin(); spePtr!=species.end(); ++spePtr){
+
 		descendants = (*spePtr)->evolve(&all_nodes, &all_connections);
+
 		new_individuals.insert(end(new_individuals), begin(descendants), end(descendants));
 	}
 
+	// for(indPtr=individuals.begin(); indPtr!=prev(individuals.end()); ++indPtr){
+	// 	delete *indPtr;
+	// }
 	individuals.clear();
 	individuals = new_individuals;
 
@@ -159,35 +174,42 @@ void Population::speciate(){
 	bool accepted;
 
 	for(curInd=individuals.begin(); curInd!=individuals.end(); ++curInd){
+		// cout << "spe1" << endl;
+
 		accepted = false;
 		if(species.size()==0){
 			Species *new_species = new Species(*curInd);
+			// cout << "spe2" << endl;
 
 			species.push_back(new_species);
 		}
 		else{
+			// cout << "spe3" << endl;
+
 			for(spePtr=species.begin(); spePtr!=species.end(); ++spePtr){
+				// cout << "spe4" << endl;
 
 				accepted = (*spePtr)->add_member(*curInd);
+				// cout << "spe5" << endl;
 
 				if(accepted) break;
 			}
 			if(!accepted){
+				// cout << "spe6" << endl;
+
 				Species *new_species = new Species(*curInd);
 				species.push_back(new_species);
 			}
-
 		}
 	}
-
 }
 
 
 Population::~Population(){
-	vector<Individual*>::iterator curInd;
+	// vector<Individual*>::iterator curInd;
 
-	for(curInd=individuals.begin(); curInd!=individuals.end(); ++curInd){
-		delete *curInd;
-	}
-	delete innov_num;
+	// for(curInd=individuals.begin(); curInd!=individuals.end(); ++curInd){
+	// 	delete *curInd;
+	// }
+	// delete innov_num;
 }

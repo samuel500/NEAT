@@ -27,7 +27,7 @@ Node::Node(nodetype ntype, int hist_marking, int creation_gen): hist_marking(his
 
 Node::Node(const Node& node){
 
-	
+
 }
 
 
@@ -51,7 +51,7 @@ bool Node::activate(){
 		}
 	}
 	if(!any_active_input_con){
-		cout << "node not activated2" <<endl;
+		// cout << "node not activated" <<endl;
 		return false; 
 	}
 

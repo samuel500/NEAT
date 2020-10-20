@@ -23,8 +23,11 @@ bool Species::is_compatible(Individual *candidate){
 	double delta = 0.;
 
 	double N;
+	// cout << "comp0" << endl;
 
 	vector<Node*> rep_nodes = rep->nodes;
+	// cout << "comp1" << endl;
+
 	vector<Node*> cand_nodes = candidate->nodes;
 
 	vector<Connection*> rep_cons = rep->connections;
@@ -48,18 +51,18 @@ bool Species::is_compatible(Individual *candidate){
 	rep_c_cursor=cand_c_cursor = 0;
 
 	int marking_cursor = rep_n_cursor; 
-	
 
 	int offset_n = 0; // 
-
 	do{
 
-		if((rep_n_cursor==rep_nodes.size() || cand_n_cursor==cand_nodes.size()) && (rep_c_cursor==rep_cons.size() || cand_c_cursor==cand_cons.size())) break;
-		else if(rep_n_cursor==rep_nodes.size() || cand_n_cursor==cand_nodes.size()) marking_cursor = min(rep_cons[rep_c_cursor]->hist_marking, cand_cons[cand_c_cursor]->hist_marking);
+		// todo: deal with case of no node (also no connection?)
+		if((rep_n_cursor==rep_nodes.size() || cand_n_cursor==cand_nodes.size()) && (rep_c_cursor==rep_cons.size() || cand_c_cursor==cand_cons.size())) break; 
+		else if(rep_n_cursor==rep_nodes.size() || cand_n_cursor==cand_nodes.size()) marking_cursor = min(rep_cons[rep_c_cursor]->hist_marking, cand_cons[cand_c_cursor]->hist_marking); 
 		else if(rep_c_cursor==rep_cons.size() || cand_c_cursor==cand_cons.size()) marking_cursor = min(rep_nodes[rep_n_cursor]->hist_marking, cand_nodes[cand_n_cursor]->hist_marking);
 		else marking_cursor = min(rep_nodes[rep_n_cursor]->hist_marking, min(cand_nodes[cand_n_cursor]->hist_marking, min(rep_cons[rep_c_cursor]->hist_marking, cand_cons[cand_c_cursor]->hist_marking)));
 
 		if(rep_nodes[rep_n_cursor - offset_n]->hist_marking==marking_cursor || cand_nodes[cand_n_cursor - offset_n]->hist_marking==marking_cursor){
+
 			if(rep_nodes[rep_n_cursor]->hist_marking != cand_nodes[cand_n_cursor]->hist_marking){
 				D += 1.;
 				if(rep_nodes[rep_n_cursor]->hist_marking <= cand_nodes[cand_n_cursor]->hist_marking) rep_n_cursor++;
@@ -79,6 +82,7 @@ bool Species::is_compatible(Individual *candidate){
 			}
 		}
 		else{
+
 			if(rep_cons[rep_c_cursor]->hist_marking != cand_cons[cand_c_cursor]->hist_marking){
 				D++;
 				if(rep_cons[rep_c_cursor]->hist_marking <= cand_cons[cand_c_cursor]->hist_marking) rep_c_cursor++;
@@ -204,8 +208,6 @@ vector<Individual*> Species::evolve(vector<Node*> *all_nodes, vector<Connection*
 	Individual *new_individual;
 
 
-
-
 	while(new_individuals.size() < n_offspring){
 
 		int n_parent = randint((int)(p_mating*members.size()), members.size()-1);
@@ -244,9 +246,11 @@ vector<Individual*> Species::evolve(vector<Node*> *all_nodes, vector<Connection*
 
 	vector<Individual*>::iterator indPtr;
 
-	for(indPtr=members.begin(); indPtr!=prev(members.end()); ++indPtr){
-		delete *indPtr;
-	}
+	// for(indPtr=members.begin(); indPtr!=prev(members.end()); ++indPtr){
+	// 	delete *indPtr;
+	// }
+
+	members.clear();
 
 	return new_individuals;
 

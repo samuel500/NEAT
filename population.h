@@ -23,11 +23,13 @@ public:
 	void xor_epoch();
 	void speciate();
 
-private:
+// private:
 
 	vector<Individual*> individuals;
 	vector<Node*> all_nodes;
 	vector<Connection*> all_connections;
+
+	Individual *elite;
 
 	vector<Species*> species;
 
