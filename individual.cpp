@@ -10,6 +10,7 @@ Individual::Individual(int *isize, int *osize, int *gen, int *innnum){ //, vecto
 	in_size = isize;
 	out_size = new int;
 	out_size = osize;
+
 	
 	generation = new int;
 	generation = gen;
@@ -70,6 +71,7 @@ Individual::Individual(const Individual& indiv){
 	in_size = indiv.in_size;
 	out_size = new int;
 	out_size = indiv.out_size;
+
 		
 	generation = new int;
 	generation = indiv.generation;
@@ -118,7 +120,9 @@ Individual::Individual(const Individual& indiv){
 		}
 
 		Connection *new_connection = new Connection(con_in_node, con_out_node, (*conPtr)->hist_marking, *generation);
+		new_connection->weight = (*conPtr)->weight;
 		connections.push_back(new_connection);
+
 
 	}
 
@@ -194,13 +198,18 @@ void Individual::reset_activations(){
 //meta mutation method
 void Individual::mutate(vector<Node*> *all_nodes, vector<Connection*> *all_connections){
 
-	if(randdouble(0.,1.)<0.9){
+	if(randdouble(0.,1.)<0.8){
+		// cout << "mu1" <<endl;
 		mutate_weights();
 	}
 	if(randdouble(0.,1.)<0.03){
+		// cout << "mu2" <<endl;
+
 		mutate_add_node(all_nodes, all_connections);
 	}
 	if(randdouble(0.,1.)<0.05){
+		// cout << "mu3" <<endl;
+
 		mutate_add_connection(all_nodes, all_connections);
 	}
 
@@ -222,8 +231,10 @@ bool Individual::mutate_add_connection(vector<Node*> *all_nodes, vector<Connecti
 	do{
 
 		int in_node_id = randint(0, nodes.size()-(*out_size)-1);
+		// cout << "ma1" << endl;
 
 		in_node = nodes[in_node_id];
+		// cout << "ma2" << endl;
 
 		int out_node_id;
 
@@ -243,11 +254,14 @@ bool Individual::mutate_add_connection(vector<Node*> *all_nodes, vector<Connecti
 			if((*conPtr)->in_node==in_node) duplicate = true; // proposed connection already exists
 
 		}
+			// cout << "ma3" << endl;
+
 		for(conPtr=out_node->out_connections.begin(); conPtr != out_node->out_connections.end(); ++conPtr){
 
 			if((*conPtr)->out_node==in_node) duplicate = true; // proposed opposite connection already exists, prevents simple loops
 
 		}
+
 
 	}while(i<20 && duplicate==true);
 
@@ -280,6 +294,7 @@ bool Individual::mutate_add_connection(vector<Node*> *all_nodes, vector<Connecti
 
 	connections.push_back(new_connection);
 	// (*all_connections).push_back(new_connection);
+	// cout << "ma3" << endl;
 
 	in_node->out_connections.push_back(new_connection);
 	out_node->in_connections.push_back(new_connection);

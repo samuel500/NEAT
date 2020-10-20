@@ -31,6 +31,8 @@ public:
 
 	Individual *elite;
 
+	void test_elite();
+
 	vector<Species*> species;
 
 	int pop_size;
@@ -38,6 +40,8 @@ public:
 	int out_size;
 	int generation;
 	int *innov_num;
+
+	double max_fitness;
 
 	
 };

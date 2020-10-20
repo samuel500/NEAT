@@ -207,23 +207,29 @@ vector<Individual*> Species::evolve(vector<Node*> *all_nodes, vector<Connection*
 
 	Individual *new_individual;
 
+	// cout << "ev1" << endl;
 
 	while(new_individuals.size() < n_offspring){
 
 		int n_parent = randint((int)(p_mating*members.size()), members.size()-1);
 
 
-
 		new_individual = new Individual(*members[n_parent]);
 
+		
+		// cout << "ev2" << endl;
+
 		new_individual->mutate(all_nodes, all_connections);
+		// cout << "ev3" << endl;
 
 		for(conPtr=new_individual->connections.begin(); conPtr!=new_individual->connections.end(); ++conPtr){
 			all_connections->push_back((*conPtr));
 		}
+
 		for(nodePtr=new_individual->nodes.begin(); nodePtr!=new_individual->nodes.end(); ++nodePtr){
 			all_nodes->push_back((*nodePtr));
 		}
+		// cout << "ev4" << endl;
 
 		new_individuals.push_back(new_individual);
 
@@ -238,6 +244,8 @@ vector<Individual*> Species::evolve(vector<Node*> *all_nodes, vector<Connection*
 			for(nodePtr=new_individual->nodes.begin(); nodePtr!=new_individual->nodes.end(); ++nodePtr){
 				all_nodes->push_back((*nodePtr));
 			}
+			// cout << "ev5" << endl;
+
 		}
 	}
 

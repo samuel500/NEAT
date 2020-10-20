@@ -17,7 +17,7 @@ class Species{
 
 public:	
 
-	Species(Individual *founding_member, double c1=1., double c2=1., double c3=0.4, double max_d=3);
+	Species(Individual *founding_member, double c1=1., double c2=1., double c3=0.4, double max_d=3.);
 	~Species();
 
 	bool is_compatible(Individual *candidate);

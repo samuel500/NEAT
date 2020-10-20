@@ -34,13 +34,13 @@ bool Connection::operator<(const Connection& connection){
 
 void Connection::reset_weight(){
 
-	weight = randdouble(-1., 1.);
+	weight = randdouble(-3., 3.);
 
 }
 
 void Connection::perturb_weight(){
 
-	weight += randdouble(-1., 1.);
+	weight += randdouble(-3, 3);
 }
 
 Connection::~Connection(){
