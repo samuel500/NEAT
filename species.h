@@ -23,8 +23,6 @@ public:
 	bool is_compatible(Individual *candidate);
 	bool add_member(Individual *candidate);
 
-	// double get_tot_species_fitness();
-
 	void adjust_fitness();
 	double get_avg_fitness() const;
 	int calc_n_offspring();

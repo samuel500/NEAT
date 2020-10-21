@@ -35,6 +35,8 @@ bool Species::is_compatible(Individual *candidate){
 
 	N = max(rep_nodes.size()+rep_cons.size(), cand_nodes.size()+cand_nodes.size());
 
+	// if(N<20) N = 1;
+
 	sort(rep_nodes.begin(), rep_nodes.end(), nodePtr_compare);
 	sort(cand_nodes.begin(), cand_nodes.end(), nodePtr_compare);
 
@@ -143,21 +145,6 @@ double Species::get_avg_fitness() const {
 }
 
 
-// double Species::get_tot_species_fitness(){
-
-// 	vector<Individual*>::iterator indPtr;
-
-// 	double tot_fitness = 0.;
-
-// 	for(indPtr=members.begin(); indPtr!=members.end(); indPtr++){
-
-// 		tot_fitness += (*indPtr)->adjusted_fitness;
-// 	}
-
-// 	return tot_fitness;
-
-// }
-
 
 
 bool Species::add_member(Individual *candidate){
@@ -216,7 +203,7 @@ vector<Individual*> Species::evolve(vector<Node*> *all_nodes, vector<Connection*
 
 		new_individual = new Individual(*members[n_parent]);
 
-		
+
 		// cout << "ev2" << endl;
 
 		new_individual->mutate(all_nodes, all_connections);
@@ -264,12 +251,6 @@ vector<Individual*> Species::evolve(vector<Node*> *all_nodes, vector<Connection*
 
 
 }
-
-
-
-
-
-
 
 
 
