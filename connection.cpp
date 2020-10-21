@@ -45,7 +45,7 @@ void Connection::perturb_weight(){
 
 Connection::~Connection(){
 
-	delete in_node;
-	delete out_node;
+	in_node = NULL;
+	out_node = NULL;
 	
 }

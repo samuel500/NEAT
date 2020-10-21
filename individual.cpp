@@ -402,16 +402,16 @@ bool Individual::mutate_add_node(vector<Node*> *all_nodes, vector<Connection*> *
 
 Individual::~Individual(){
 
-	// vector<Node*>::iterator curNode;
-	// vector<Connection*>::iterator curCon;
+	vector<Node*>::iterator curNode;
+	vector<Connection*>::iterator curCon;
 
-	// for(curNode=nodes.begin(); curNode!=nodes.end(); ++curNode){
-	// 	delete *curNode;
-	// }
+	for(curNode=nodes.begin(); curNode!=nodes.end(); ++curNode){
+		delete *curNode;
+	}
 
-	// for(curCon=connections.begin(); curCon!=connections.end(); ++curCon){
-	// 	delete *curCon;
-	// }
+	for(curCon=connections.begin(); curCon!=connections.end(); ++curCon){
+		delete *curCon;
+	}
 
 }
 

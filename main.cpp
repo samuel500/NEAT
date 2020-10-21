@@ -16,7 +16,6 @@ int main(int argc, char *argv[]){
 	for(int i=0; i<1000; ++i){
 		cout << "gen " << i+1 << endl;
 		// cout << "m1" << endl;
-		population.speciate();
 		// cout << "m2" << endl;
 
 		population.xor_epoch();
@@ -25,17 +24,23 @@ int main(int argc, char *argv[]){
 
 		cout << "spe size " << population.species.size() << endl;
 
-		population.species.clear();
 		// cout << "m4" << endl;
 
 		cout << "fin innov_num " << *(population.innov_num) << endl;
 
 		cout << "elite " << population.elite->fitness << endl;
-		population.test_elite();
+		// population.test_elite();
 		cout << "max f " << population.max_fitness << endl;
 
 		cout << "pop size " << population.individuals.size() << endl;
-		if(population.max_fitness>15.9) break;
+		if(population.max_fitness>15.9){
+
+			vector<Connection*>::iterator conPtr;
+			for(conPtr=population.elite->connections.begin(); conPtr!=population.elite->connections.end(); ++conPtr){
+				cout << "w " << (*conPtr)->weight << endl; 
+			}
+			break;
+		}
 	}
 
 	return 0;

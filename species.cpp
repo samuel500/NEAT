@@ -237,7 +237,7 @@ vector<Individual*> Species::evolve(vector<Node*> *all_nodes, vector<Connection*
 	}
 
 
-	rep = members[members.size()-1];
+	// rep = members[members.size()-1];
 
 	vector<Individual*>::iterator indPtr;
 
@@ -245,7 +245,7 @@ vector<Individual*> Species::evolve(vector<Node*> *all_nodes, vector<Connection*
 	// 	delete *indPtr;
 	// }
 
-	members.clear();
+	// members.clear();
 
 	return new_individuals;
 
@@ -262,5 +262,12 @@ bool Species::operator<(const Species& spe){
 
 Species::~Species(){
 
+	vector<Individual*>::iterator indPtr;
 
+	rep = NULL;
+
+	for(indPtr=members.begin(); indPtr!=members.end(); indPtr++){
+
+	 	*indPtr = NULL;
+	}
 }

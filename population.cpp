@@ -65,19 +65,12 @@ Population::Population(int popsize, int insize, int outsize): pop_size(popsize),
 		if(!activated) cout<<"error, individual failed to activate"<<endl;
 
 		vector<double> out = new_individual->get_outputs();
-		cout<<  "or"<<out[0]<<endl;
+		// cout<<  "or"<<out[0]<<endl;
 
 		new_individual->reset_activations();
 
-		cp_ind = new Individual(*new_individual);
 
-		activated = cp_ind->activate(inp);
 		// cout << "p4" << endl;
-
-		if(!activated) cout<<"error, individual failed to activate"<<endl;
-
-		out = cp_ind->get_outputs();
-		cout<<"cp"<<out[0]<<endl;
 
 
 		individuals.push_back(new_individual);
@@ -125,6 +118,8 @@ void Population::xor_epoch(){
 
 	all_nodes.clear();
 	all_connections.clear();
+
+	speciate();
 
 	vector<vector<double>> xs {{1., 0.,0.}, {1., 0.,1.}, {1., 1.,0.}, {1., 1.,1.}};
 	vector<double> ys {0., 1., 1., 0.};
@@ -203,11 +198,17 @@ void Population::xor_epoch(){
 		new_individuals.insert(end(new_individuals), begin(descendants), end(descendants));
 	}
 
-	// for(indPtr=individuals.begin(); indPtr!=prev(individuals.end()); ++indPtr){
-	// 	delete *indPtr;
-	// }
+	for(indPtr=individuals.begin(); indPtr!=prev(individuals.end()); ++indPtr){
+		delete *indPtr;
+	}
 	individuals.clear();
 	individuals = new_individuals;
+
+
+	for(spePtr=species.begin(); spePtr!=prev(species.end()); ++spePtr){
+		delete *spePtr;
+	}
+	species.clear();
 
 
 }
